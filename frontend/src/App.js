@@ -27,11 +27,12 @@ function App() {
   }
 
   const updateTask = (id)=>{
-    Axios.delete('http://localhost:3001/update', {
+    console.log(updatedTask)
+    Axios.put('http://localhost:3001/update', {
       id: id,
       title: updatedTask
     })
-
+    setUpdatedTask('')
   }
 
   return (

@@ -22,7 +22,7 @@ db.connect((err) =>{
     console.log('connected');
 }})
 
-app.post('/insert', cors(), (req, res)=>{
+app.post('/insert', (req, res)=>{
     const newTask = req.body.task;
     console.log(newTask)
     const sqlInsert = "INSERT INTO todos (Title) VALUES (?)"
@@ -35,7 +35,7 @@ app.post('/insert', cors(), (req, res)=>{
     })
 })
 
-app.get('/load', cors(), (req, res)=>{
+app.get('/load', (req, res)=>{
     const sqlSelect = "SELECT * FROM todos";
     db.query(sqlSelect, (err, result)=>{
         if (err){
@@ -46,7 +46,7 @@ app.get('/load', cors(), (req, res)=>{
     })
 })
 
-app.delete('/del/:id', cors(), (req, res)=>{
+app.delete('/del/:id', (req, res)=>{
     const id = req.params.id;
     const sqlDel = "DELETE FROM todos WHERE id = ?"
     db.query(sqlDel, id, (err, result)=>{
@@ -58,11 +58,11 @@ app.delete('/del/:id', cors(), (req, res)=>{
     })
 })
 
-app.put('/update', cors(), (req, res)=>{
+app.put('/update', (req, res)=>{
     const id = req.body.id;
     const title = req.body.title;
-    const sqlUpdate = "UPDATE SET todos Title = ? WHERE id = ?"
-    db.query(sqlUpdate, [id, title], (err, result)=>{
+    const sqlUpdate = "UPDATE todos SET Title = ? WHERE id = ?"
+    db.query(sqlUpdate, [title, id], (err, result)=>{
         if (err){
             console.log(err)
             }else{
