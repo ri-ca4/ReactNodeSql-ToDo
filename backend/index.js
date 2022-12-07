@@ -46,4 +46,29 @@ app.get('/load', cors(), (req, res)=>{
     })
 })
 
+app.delete('/del/:id', cors(), (req, res)=>{
+    const id = req.params.id;
+    const sqlDel = "DELETE FROM todos WHERE id = ?"
+    db.query(sqlDel, id, (err, result)=>{
+        if (err){
+            console.log(err)
+            }else{
+            res.send(result)
+            }
+    })
+})
+
+app.put('/update', cors(), (req, res)=>{
+    const id = req.body.id;
+    const title = req.body.title;
+    const sqlUpdate = "UPDATE SET todos Title = ? WHERE id = ?"
+    db.query(sqlUpdate, [id, title], (err, result)=>{
+        if (err){
+            console.log(err)
+            }else{
+            res.send(result)
+            }
+    })
+})
+
 app.listen(3001);

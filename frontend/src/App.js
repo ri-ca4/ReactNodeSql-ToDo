@@ -2,9 +2,12 @@ import React from "react";
 import { useState , useEffect } from "react";
 import Axios from "axios";
 
+
+
 function App() {
   const [task, setTask] = useState('')
   const [toDoList, setToDoList] = useState ([])
+  const [updatedTask, setUpdatedTask] = useState('')
 
   useEffect(()=>{
     Axios.get('http://localhost:3001/load').then((response)=>{
@@ -12,15 +15,24 @@ function App() {
     })
   })
 
-
+  
   const submitTask = ()=>{
     Axios.post('http://localhost:3001/insert', {
       task: task
-    }).then(()=>{
-      alert('Task Saved')
     })
   }
 
+  const deleteTask = (id)=>{
+    Axios.delete(`http://localhost:3001/del/${id}`)
+  }
+
+  const updateTask = (id)=>{
+    Axios.delete('http://localhost:3001/update', {
+      id: id,
+      title: updatedTask
+    })
+
+  }
 
   return (
     <div className="App">
@@ -31,7 +43,19 @@ function App() {
       }}/>
       <button onClick={submitTask}>Submit</button>
       {toDoList.map((val)=>{
-        return <h1 id={val.id}>{val.Title}</h1>
+        return (
+        <div className="toDoItem">
+          <h1>{val.Title}</h1>
+          <button>Edit</button>
+          <button onClick={()=>{deleteTask(val.id)}}>Delete</button>
+          <div className="hidden">
+            <input type="text" onChange={(e)=>{
+                setUpdatedTask(e.target.value)
+              }}/>
+            <button onClick={()=>{updateTask(val.id)}}>Submit</button>
+          </div>
+        </div>
+        )
       })}
     </div>
   );
