@@ -1,7 +1,7 @@
 import React from "react";
 import { useState , useEffect } from "react";
 import Axios from "axios";
-
+import './App.css';
 
 
 function App() {
@@ -14,7 +14,6 @@ function App() {
       setToDoList(response.data)
     })
   })
-
   
   const submitTask = ()=>{
     Axios.post('http://localhost:3001/insert', {
@@ -27,30 +26,38 @@ function App() {
   }
 
   const updateTask = (id)=>{
-    console.log(updatedTask)
     Axios.put('http://localhost:3001/update', {
       id: id,
       title: updatedTask
     })
     setUpdatedTask('')
+    setHidden(!isHidden);
   }
+  
+  const [isHidden, setHidden] = useState("false");
+
+  const handleToggle = () => {
+    setHidden(!isHidden);
+  };
 
   return (
     <div className="App">
+
       <h1>TO DO LIST</h1>
       <label name="task">Enter Task</label>
       <input type="text" name="task" onChange={(e)=>{
-        setTask(e.target.value)
-      }}/>
+          setTask(e.target.value)
+        }}/>
       <button onClick={submitTask}>Submit</button>
+
       {toDoList.map((val)=>{
         return (
         <div className="toDoItem">
           <h1>{val.Title}</h1>
-          <button>Edit</button>
+          <button onClick={handleToggle}>Edit</button>
           <button onClick={()=>{deleteTask(val.id)}}>Delete</button>
-          <div className="hidden">
-            <input type="text" onChange={(e)=>{
+          <div className={isHidden ? 'hidden' : null}>
+            <input type="text" placeholder={val.Title} onChange={(e)=>{
                 setUpdatedTask(e.target.value)
               }}/>
             <button onClick={()=>{updateTask(val.id)}}>Submit</button>
