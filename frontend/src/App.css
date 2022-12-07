@@ -1,38 +1,79 @@
 .App {
-  text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    width: 50vw;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.hidden {
+    visibility: hidden;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.toDoItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 2vh
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.toDoItem h1{
+    font-size: 1.5em;
 }
 
-.App-link {
-  color: #61dafb;
+input { 
+    width: 100%;
+    height: 7vh;
+    border: 1px solid black;
+    background-color: white;
+    border-radius: 3px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+button{
+    height: 7vh;
+    border-radius: 3px;
 }
+
+.submit{
+    width: 25vh;
+    background-color:cornflowerblue;
+    color: white;
+    font-weight: bold;
+    border: none;
+}
+
+.edit{
+    width: 25vh;
+    background-color: white;
+    color: darkslategrey;
+    font-weight: bold;
+    border: 1px solid darkslategrey;
+}
+
+.exitEdit{
+    width: 100%;
+    background-color: white;
+    color: darkslategrey;
+    font-weight: bold;
+    border: none;
+}
+
+.editArea{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.del{
+    width: 100%;
+    background-color: white;
+    color: darkred;
+    font-weight: bold;
+    border: none;
+}
+

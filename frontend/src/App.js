@@ -1,7 +1,7 @@
 import React from "react";
 import { useState , useEffect } from "react";
 import Axios from "axios";
-
+import './App.css';
 
 
 function App() {
@@ -14,7 +14,6 @@ function App() {
       setToDoList(response.data)
     })
   })
-
   
   const submitTask = ()=>{
     Axios.post('http://localhost:3001/insert', {
@@ -27,33 +26,45 @@ function App() {
   }
 
   const updateTask = (id)=>{
-    console.log(updatedTask)
     Axios.put('http://localhost:3001/update', {
       id: id,
       title: updatedTask
     })
     setUpdatedTask('')
   }
+  
+  const [isHidden, setHidden] = useState("false");
+
+  const handleToggle = () => {
+    setHidden(!isHidden);
+  };
 
   return (
     <div className="App">
+
       <h1>TO DO LIST</h1>
-      <label name="task">Enter Task</label>
+      <label name="task">Enter Task</label><br/>
       <input type="text" name="task" onChange={(e)=>{
-        setTask(e.target.value)
-      }}/>
-      <button onClick={submitTask}>Submit</button>
+          setTask(e.target.value)
+        }}/><br/>
+      <div className="buttons">
+        <button className="submit" onClick={submitTask}>Submit</button>
+        <button className="edit" onClick={handleToggle}>Edit</button><br/>
+      </div>
+      <button onClick={handleToggle}
+        className={isHidden ? 'hidden' : 'exitEdit'}>Exit Edit</button>
+
+
       {toDoList.map((val)=>{
         return (
         <div className="toDoItem">
           <h1>{val.Title}</h1>
-          <button>Edit</button>
-          <button onClick={()=>{deleteTask(val.id)}}>Delete</button>
-          <div className="hidden">
-            <input type="text" onChange={(e)=>{
+          <button className="del" onClick={()=>{deleteTask(val.id)}}>Delete</button>
+          <div className={isHidden ? 'hidden' : "editArea"}>
+            <input type="text" placeholder={val.Title} onChange={(e)=>{
                 setUpdatedTask(e.target.value)
               }}/>
-            <button onClick={()=>{updateTask(val.id)}}>Submit</button>
+            <button className="submit" onClick={()=>{updateTask(val.id)}}>Submit</button>
           </div>
         </div>
         )
