@@ -4,6 +4,14 @@ import Axios from "axios";
 
 function App() {
   const [task, setTask] = useState('')
+  const [toDoList, setToDoList] = useState ([])
+
+  useEffect(()=>{
+    Axios.get('http://localhost:3001/load').then((response)=>{
+      setToDoList(response.data)
+    })
+  })
+
 
   const submitTask = ()=>{
     Axios.post('http://localhost:3001/insert', {
@@ -13,6 +21,7 @@ function App() {
     })
   }
 
+
   return (
     <div className="App">
       <h1>TO DO LIST</h1>
@@ -21,6 +30,9 @@ function App() {
         setTask(e.target.value)
       }}/>
       <button onClick={submitTask}>Submit</button>
+      {toDoList.map((val)=>{
+        return <h1 id={val.id}>{val.Title}</h1>
+      })}
     </div>
   );
 }

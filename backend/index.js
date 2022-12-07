@@ -11,7 +11,8 @@ const db = mysql.createConnection({
     password: '',
 });
 
-app.use(bodyParser.json())
+app.use(express.json())
+app.use(bodyParser.urlencoded({extended: true}))
 app.use(cors())
 
 db.connect((err) =>{  
@@ -30,6 +31,17 @@ app.post('/insert', cors(), (req, res)=>{
             console.log(err)
             }else{
             console.log(result);
+            }
+    })
+})
+
+app.get('/load', cors(), (req, res)=>{
+    const sqlSelect = "SELECT * FROM todos";
+    db.query(sqlSelect, (err, result)=>{
+        if (err){
+            console.log(err)
+            }else{
+            res.send(result)
             }
     })
 })
